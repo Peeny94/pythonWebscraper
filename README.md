@@ -1,3 +1,1 @@
-# pythonStudy
-# pythonStudy
-# pythonStudy
+nico의 파이썬 웹스크래퍼강의 기록
