@@ -15,6 +15,6 @@ while playing:
     elif user_choice < pc_choice:
         print("Higher") 
 
-# 깃 최초 커밋시에 이메일 및 이름을 등록해야 한다.
+# 깃 최초 커밋시에 이메일 및 이름을 등록해야 한다.mac 의 경우 xcode 를 앱스토어에서 설치 및 업데이트를 지원해준다.
 # git config --global user.email "@gmail.com"
 # git config --global user.name "kyoungminLee"
