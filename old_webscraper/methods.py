@@ -35,10 +35,16 @@ print(days[-1])// Fri -뒤에서부터 호출할땐 1부터 역순이다. -0은 
     'name':['lee'], #list 의 경우 append method를 통해 값을 추가가능
     'age':12,
     'alive':True
+    'luv': {
+        'name': "poop",
+        'fav_food': ["💩"]
+    }
 }
 print(player)
-player.pop('age')
+player.pop('age') #해당 key 와 value를 완전 삭제
 player['xp'] = 1500
 player['name'].append("🗽")
-print(player) #특정 key 만 불러올 ㅅ경우 player.get('key') or player['key'] """
+player['luv']['fav_food']
+print(player) #특정 key 만 불러올 경우 player.get('key') or player['key'] """
 
+#연습 프로젝드 하기. ch4.5
