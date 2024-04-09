@@ -30,4 +30,15 @@ print(days[-1])// 배열이므로 호출방법은 [] list 와 동일하다. '-' 
 
 print(days[-1])// Fri -뒤에서부터 호출할땐 1부터 역순이다. -0은 동일하게 'Mon'을 출력한다. 
 """
- 
+#  Dicts- 중괄호를 쓰며 key와 value 를 임의로 설정
+""" player = {
+    'name':['lee'], #list 의 경우 append method를 통해 값을 추가가능
+    'age':12,
+    'alive':True
+}
+print(player)
+player.pop('age')
+player['xp'] = 1500
+player['name'].append("🗽")
+print(player) #특정 key 만 불러올 ㅅ경우 player.get('key') or player['key'] """
+
