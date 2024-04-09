@@ -45,6 +45,6 @@ player.pop('age') #해당 key 와 value를 완전 삭제
 player['xp'] = 1500
 player['name'].append("🗽")
 player['luv']['fav_food']
-print(player) #특정 key 만 불러올 경우 player.get('key') or player['key'] """
+print(player) #특정 key 만 불러올 경우 player.get('key이름') or player['key이름'] """
 
 #연습 프로젝드 하기. ch4.5
