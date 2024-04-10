@@ -35,7 +35,7 @@ for each in data:
     #print("each의 데이터 값을 알려준다", each)
     if not each.startswith("https://"): #bool
         each = f"http://{each}"#each 변수값에 수정된 값을 넣어 주어야 한다. 
-    response = get(each)    
+    response = get(each) 
     #print(response) #값 중 하나라도 연결이 오류나면 err. 출력값 확인이 불가능. 단 dicts를 만들어 값을 재입력 후 출력시 오류값을 제외하여 나온다.  
     #print(response.status_code)
         #status_code = str(response.status_code)
@@ -44,13 +44,13 @@ for each in data:
     elif response.status_code>=300:
         results[each] = "REDIRECT"
     elif response.status_code>=400:
-        results[each] = "Bad_Gateway"
+        results[each] = "Client_Error"
     elif response.status_code>=500:
         results[each] = "Internal_Server_Error"     
     else:
         results[each] ="FAILED"
   
-print("\n".join(results)) # \n을 반복문 안에 써줄경우, key값만 출력된다.
+#print("\n".join(results)) # \n을 반복문 안에 써줄경우, key값만 출력된다.
 """ 
 https://google.com
 https://nomadcoders.co
@@ -59,12 +59,16 @@ http://facebook.com
 http://tiktok.com
 http://nomadcoders.co/python-for-beginners/lectures/3787
 """
-a = set()
+a = {}
+
 for key in results.keys():
     for value in results.values():
-        a.add((key,value)) #결과를 set 에 추가한다.
-print("\n".join(map(str,a)))
-""" 
+        a[key]=value
+#하기 코드를 써야 
+for key, value in a.items():
+    print(f"{key}: {value}\n")
+
+"""
 ('https://google.com', 'OK')
 ('http://facebook.com', 'OK')
 ('https://nomadcoders.co', 'OK')
@@ -73,13 +77,10 @@ print("\n".join(map(str,a)))
 ('http://tiktok.com', 'OK')
 {'https://google.com': 'OK', 'https://nomadcoders.co': 'OK', 'http://airbnb.com': 'OK', 'http://facebook.com': 'OK', 'http://tiktok.com': 'OK', 'http://nomadcoders.co/python-for-beginners/lectures/3787': 'OK'}
 """
-print(results)
-""" 
-{'https://google.com': 'OK', 'https://nomadcoders.co': 'OK', 'http://airbnb.com': 'OK', 'http://facebook.com': 'OK', 'http://tiktok.com': 'OK', 'http://nomadcoders.co/python-for-beginners/lectures/3787': 'OK'}
-"""
 
-for k,v in results.items():
-    print("(key={key},value={value})".format(key=k,value=v)) 
+
+#for k,v in results.items():
+    #print("(key={key},value={value})".format(key=k,value=v)) 
 """ 
 (key=https://nomadcoders.co,value=OK)
 (key=http://airbnb.com,value=OK)
