@@ -12,7 +12,8 @@ class GuardDog(Ddog):
         super().__init__(name, 
                          5, 
                          breed
-                    )   
+                    )
+        self.aggresive = True  
     
     def rrrrr(self):
         print("stay away!")
@@ -23,9 +24,10 @@ class Dog(Ddog):
                          0.1, 
                          breed
                     )
+        self.spoiled =True #독자적인 property를 생성할 수있다.
     
     def woof_woof(self):
-        print("Inheritance!")    
+        print("Inheritance!") 
         
 aDog = Dog(
     name="a",
@@ -36,4 +38,4 @@ bDog = Dog(
     breed="Dalmatian"
     )
 
-print(aDog,bDog) 
+bDog.sleep() 
