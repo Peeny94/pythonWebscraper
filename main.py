@@ -12,7 +12,7 @@ soup = BeautifulSoup(
 )
 
 jobs = soup.find("section",
-        #파이썬 언어라 '_'fmf 붙여줘야 한다.
+        #파이썬 언어라 '_'를 붙여줘야 한다.
         class_ ="jobs"
     ).find_all("li")[1:-1] 
 for job in jobs:
