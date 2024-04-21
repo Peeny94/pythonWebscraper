@@ -21,13 +21,11 @@ data 는 영화의 세부정보가 포함된 dictionary 가 됩니다.
 for id in movie_ids:
     url = f"https://nomad-movies.nomadcoders.workers.dev/movies/{id}"
     response = requests.get(url)
-    data = response.json()
-    title = data.get("title")
-    overview = data.get("overview")
-    vote_average = data.get("vote_average")
-    
-    
-    print("Title:", title)
-    print("Overview:", overview)
-    print("Vote Average:", vote_average)
-    print("-" * 20)
+    data = response.json()    
+    title = data["title"]
+    overview = data["overview"]
+    vote_aver = data["vote_average"] 
+    print(f"title: {title}\noverview: {overview}\nvote_average: {vote_aver}\n-------")
+
+
+# $$$$$ 2024.0421 과제 제출. $$$$$
