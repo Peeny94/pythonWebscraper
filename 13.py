@@ -16,8 +16,18 @@ response = requests.get(....)
 data = response.json()
 data 는 영화의 세부정보가 포함된 dictionary 가 됩니다.
 영화의 세부정보를 얻은 후 title, overview, vote_average 를 프린트 해야 합니다.
- """
- 
+"""
 
-response = requests.get(....)
-data = response.json()
+for id in movie_ids:
+    url = f"https://nomad-movies.nomadcoders.workers.dev/movies/{id}"
+    response = requests.get(url)
+    data = response.json()
+    title = data.get("title")
+    overview = data.get("overview")
+    vote_average = data.get("vote_average")
+    
+    
+    print("Title:", title)
+    print("Overview:", overview)
+    print("Vote Average:", vote_average)
+    print("-" * 20)
