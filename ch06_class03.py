@@ -12,13 +12,16 @@ def scrape_page(url):
     )
     jobs = soup.find("section",
             class_ ="jobs"
-        ).find_all("li")
+        ).find_all("li")[1:-2]
     for job in jobs:
         title = job.find("span",class_="title").text
-        company,position,region  = job.find_all("span", class_="company")
+        companys = job.find_all("span", class_="company")
+        if len(companys) >= 3: 
+            company,position,region  = companys
+        else:
+            company,position = companys
         url = job.find("div", class_="tooltip--flag-logo").next_sibling["href"]
-        job_data ={
-        
+        job_data ={     
             "title": title,
             "company": company.text,
             "position": position.text,
