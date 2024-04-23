@@ -2,9 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 
 all_jobs=[]
-
 def scrape_page(url): 
-    
+
     response = requests.get(url)
 
     soup = BeautifulSoup(
@@ -13,7 +12,7 @@ def scrape_page(url):
     )
     jobs = soup.find("section",
             class_ ="jobs"
-        ).find_all("li")[1:-1]
+        ).find_all("li")
     for job in jobs:
         title = job.find("span",class_="title").text
         company,position,region  = job.find_all("span", class_="company")
@@ -34,9 +33,10 @@ soup = BeautifulSoup(response.content, "html.parser")
 
 buttons =  len(soup.find("div", class_="pagination").find_all("span", class_="page")) #page 양을 통해 반복문 횟수를 결정한다.
 
+#scrap_page에서 따로 url 을 정의하지 않는 건 하기 반복문으로 전체 페이징 코드를 작성하기 때문.
 for x in range(buttons):
     # 리스트에 특성에 따라 페이지 1부터로 임의로 숫자를 변경함.
-    url = f"https://weworkremotely.com/remote-full-time-jobs?page=1{x+1}"
+    url = f"https://weworkremotely.com/remote-full-time-jobs?page={x+1}"
     scrape_page(url)
-    
+
 print(len(all_jobs))
