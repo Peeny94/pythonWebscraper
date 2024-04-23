@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import logging # 웹페이지에서 지정된 값 이외에 변수를 처리하기 위한 목적
 
 all_jobs=[]
 def scrape_page(url): 
@@ -12,14 +13,20 @@ def scrape_page(url):
     )
     jobs = soup.find("section",
             class_ ="jobs"
-        ).find_all("li")[1:-2]
+        ).find_all("li")[:-1]
     for job in jobs:
         title = job.find("span",class_="title").text
-        companys = job.find_all("span", class_="company")
-        if len(companys) >= 3: 
+        companys = job.find_all("span", class_="company")   
+        if len(companys) == 3: 
             company,position,region  = companys
-        else:
+        elif len(companys) == 2:
             company,position = companys
+        else:
+            for err in companys:
+                logging.warning(f"errURL: {url}")              
+            # for err_info in companys:
+            #     logging.warning(f"errURL: {url}\n errVelue: {companys}")  # 로그 기록
+            continue # 다음 job으로 이동
         url = job.find("div", class_="tooltip--flag-logo").next_sibling["href"]
         job_data ={     
             "title": title,
@@ -28,7 +35,7 @@ def scrape_page(url):
             "region": region.text,
             "url": f"https://weworkremotely.com{url}",
         }
-        all_jobs.append(job_data) 
+        all_jobs.append(job_data)
         
 response =requests.get("https://weworkremotely.com/remote-full-time-jobs?page=1")
 
@@ -43,3 +50,4 @@ for x in range(buttons):
     scrape_page(url)
 
 print(len(all_jobs))
+print(all_jobs)
