@@ -21,12 +21,15 @@ def scrape_page(url):
             company,position,region  = companys
         elif len(companys) == 2:
             company,position = companys
+            
+            continue
+        """         
         else:
-            for err in companys:
-                logging.warning(f"errURL: {url}")              
+            logging.warning(f"{companys}\n")           
             # for err_info in companys:
-            #     logging.warning(f"errURL: {url}\n errVelue: {companys}")  # 로그 기록
-            continue # 다음 job으로 이동
+            # logging.warning(f"errURL: {url}\n errVelue: {companys}")  # 로그 기록
+            continue # 다음 job으로 이동 
+        """
         url = job.find("div", class_="tooltip--flag-logo").next_sibling["href"]
         job_data ={     
             "title": title,
@@ -50,3 +53,4 @@ for x in range(totla_pages):
 
 print(len(all_jobs))
 print(all_jobs)
+
