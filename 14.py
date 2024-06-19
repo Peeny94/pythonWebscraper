@@ -12,8 +12,8 @@ https://berlinstartupjobs.com/skill-areas/javascript/
 첫 번째 URL에는 페이지가 있으므로 pagination 을 처리해야 합니다.
 나머지 URL은 특정 스킬에 대한 것입니다. URL의 구조에 스킬 이름이 있으므로 모든 스킬을 스크래핑할 수 있는 스크래퍼를 만드세요.
 회사 이름, 직무 제목, 설명 및 직무 링크를 추출하세요. 
-"""
 
+"""
 
 
 class Scrape:
@@ -26,34 +26,28 @@ class Scrape:
             "html.parser"
         )
         self.url = soup
+        
+# 직무제목,회사이름, 직무링크, 설명
+# bjs-jild__h https://berlinstartupjobs.com/engineering/senior-golang-engineer-f-m-d-berlin-hybrid-fincompare/
+# bjs-jlid__b https://berlinstartupjobs.com/companies/fincompare/
+# links-box    bjs-bl bjs-bl-whisper # 구직명
+# bjs-jlid__description
+
     def scrape_page(self,soup,all_jobs): 
 
-        jobs = soup.find("section",
-                class_ ="jobs"
-            ).find_all("li")[:-1]
+        jobs = soup.find("li",
+                class_ ="bjs-jild"
+            ).find_all("li") # [:-1]
         for job in jobs:
-            title = job.find("span",class_="title").text
-            companys = job.find_all("span", class_="company")   
-            if len(companys) == 3: 
-                company,position,region  = companys
-            elif len(companys) == 2:
-                company,position = companys
-            else :
-                continue
-            """         else:
-                for err in companys:
-                    logging.warning(f"errURL: {url}")              
-                # for err_info in companys:
-                #     logging.warning(f"errURL: {url}\n errVelue: {companys}")  # 로그 기록
-                continue # 다음 job으로 이동 
-                """
-            url = job.find("div", class_="tooltip--flag-logo").next_sibling["href"]
+            title = job.find("h4",class_="bjs-jild__h").text
+            company= job.find("a", class_="bjs-jlid__b").text   
+            description = job.find("div", class_="bjs-jlid__description").text
+            url = job.find_all("div", class_="links-box").next_sibling["a"]
             job_data ={     
                 "title": title,
                 "company": company.text,
-                "position": position.text,
-                "region": region.text,
-                "url": f"https://weworkremotely.com{url}",
+                "description": description.text,
+                "url": f"https://berlinstartupjobs.com/skill-areas/{url}",
             }
             all_jobs.append(job_data)
 class Pagination:
@@ -61,13 +55,14 @@ class Pagination:
     def get_pages(url):    
         response =requests.get(url)
         soup = BeautifulSoup(response.content, "html.parser")
-        buttons =  len(soup.find("div", class_="pagination").find_all("span", class_="page")) #page 양을 통해 반복문 횟수를 결정한다.
+        #class 는 class 메서드와의 구별을 위헤 '_'를 붙여서 사용한다. 그 외 기능은 없다. '_'를 붙이지 않으면 구문에 오류가 난다.
+        buttons =  len(soup.find("ul", class_="bsj-now").find_all("a", class_="page-numbers")) #page 양을 통해 반복문 횟수를 결정한다.
         return buttons
-    totla_pages = get_pages("https://weworkremotely.com/remote-full-time-jobs?page=1")
+    totla_pages = get_pages("https://berlinstartupjobs.com/engineering/page/1/")
     #scrap_page에서 따로 url 을 정의하지 않는 건 하기 반복문으로 전체 페이징 코드를 작성하기 때문.
     for x in range(totla_pages):
         # 리스트에 특성에 따라 페이지 1부터로 임의로 숫자를 변경함.
-        url = f"https://weworkremotely.com/remote-full-time-jobs?page={x+1}"
+        url = f"https://berlinstartupjobs.com/engineering/page/{x+1}/"
         #scrape_page(url)
 
     # print(len(all_jobs))
@@ -76,22 +71,18 @@ class Pagination:
     #키워드 목록으로  "remotelOk" 사이트에서 해당 키워드로 일자리 검색하기
 
     keywords = [
-        "flutter",
         "python",
-        "golang"
+        "typescript",
+        "javascript",
     ]
     #로컬에서 웹서버에 접속시도시 
-    r = requests.get("https://remoteok.com/remote-flutter-jobs",
+    r = requests.get("https://berlinstartupjobs.com/skill-areas/{keywords}",
     )
     # print(r.status_code)# 503
     # print(r.content)
 
-    """ 사이트 차단됨: code 503, 웹 개발자 - 네트워크에서 새로고침 - 서버로 브라우저가 requests 한 정보를 확인한다. :remote-flutter-jobs(code: 200)Header ->Request Header
-    ->User-Agent:
-        Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
-    """
     # 웹에서 사이트에 접속시도하는 것처럼 해당 사이트의 header정보로 접속시도시
-    r = requests.get("https://remoteok.com/remote-flutter-jobs", headers={
+    r = requests.get("https://berlinstartupjobs.com/skill-areas/{keywords}", headers={
         "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     }
     )
