@@ -36,6 +36,7 @@ def scrape_page(url):
             "url": f"https://weworkremotely.com{url}",
         }
         all_jobs.append(job_data)
+        
 def get_pages(url):    
     response =requests.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
