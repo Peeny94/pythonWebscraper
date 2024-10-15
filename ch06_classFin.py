@@ -66,23 +66,25 @@ class Pagination:
         "python",
         "golang"
     ]
-    #로컬에서 웹서버에 접속시도시 
-    r = requests.get("https://remoteok.com/remote-flutter-jobs",
-    )
-    # print(r.status_code)# 503
-    # print(r.content)
+    for keyword in keywords:
+        
+        #로컬에서 웹서버에 접속시도시 
+        r = requests.get("https://remoteok.com/remote-{keyword}-jobs",
+        )
+        # print(r.status_code)# 503
+        # print(r.content)
 
-    """ 사이트 차단됨: code 503, 웹 개발자 - 네트워크에서 새로고침 - 서버로 브라우저가 requests 한 정보를 확인한다. :remote-flutter-jobs(code: 200)Header ->Request Header
-    ->User-Agent:
-        Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
-    """
-    # 웹에서 사이트에 접속시도하는 것처럼 해당 사이트의 header정보로 접속시도시
-    r = requests.get("https://remoteok.com/remote-flutter-jobs", headers={
-        "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-    }
-    )
-    # https://remoteok.com/remote-{키워드}-jobs 
-    # def 함수로 만들되, class로 변형도 시켜보자: 모든 일자리 정보를 class 에 넣고 method를 활용해서 job들을 배열안에 넣어보자.
-    # OOP형태로의 변환도 시도해봐라. 💩
+        """ 사이트 차단됨: code 503, 웹 개발자 - 네트워크에서 새로고침 - 서버로 브라우저가 requests 한 정보를 확인한다. :remote-flutter-jobs(code: 200)Header ->Request Header
+        ->User-Agent:
+            Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+        """
+        # 웹에서 사이트에 접속시도하는 것처럼 해당 사이트의 header정보로 접속시도시
+        r = requests.get("https://remoteok.com/remote-{keyword}-jobs", headers={
+            "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+        }
+        )
+        # https://remoteok.com/remote-{키워드}-jobs 
+        # def 함수로 만들되, class로 변형도 시켜보자: 모든 일자리 정보를 class 에 넣고 method를 활용해서 job들을 배열안에 넣어보자.
+        # OOP형태로의 변환도 시도해봐라. 💩
 
     print(r.content)
