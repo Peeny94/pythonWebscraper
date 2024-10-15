@@ -95,3 +95,4 @@ class Pagination:
         # OOP형태로의 변환도 시도해봐라.
 
         print(r.content)
+        
