@@ -14,19 +14,39 @@ conda list
 pip install 패키지
 pip list
 
-
-1.만약 conda 명령어가 실행이 되지 않는 경우 환경 변수에 Anaconda를 추가해야 하는 작업이 필요합니다.
-
-쉘 설정파일 열기
-nano ~|.zshrc
-파일 맨 아래에 추가하기
-export Path="경로 입력"
-
-3 . 변경사항을 저장하려면 Ctrl + X를 누르고 Y를 누르고 Enter를 누릅니다.
-콘다 실행 확인하기
-conda --version 
-터미널 열때마다 가상환경 자동 활성화 on/off 기능
-conda config --set auto_activate_base false  #off 상태
-
-우선 로컬에 설치된 모든 파이썬의 버전을 확인해보자
+# 맥에 깔린 파이썬 확인 및 정리하기
 ls -l /usr/local/bin/python*
+# sudo 를 붙여서 강제로 삭제가능, 비밀번호 입력 필요함.
+sudo rm {삭제할 파이썬 명 입력<- 날짜 다음부터 '->' 나오기 전까지 전부 입력할 것, 띄어쓰기로 삭제할 파일 경로포함 해서 복수 삭제 가능하다.}
+
+# 기본 환경변수 설정필요.(터미널 창에 아래를 순서대로 입력하기)
+export PATH=%PATH:/bin:/usr/local/bin:/usr/bin
+echo $PATH  
+vim ~/.zshrc
+    1. 환경변수 필요한 거 입력하기
+    2. esc 누르고 :eq     
+source ~/.zshrc 
+    
+<!-- 
+    저장된 환경변수
+    # 3.9.13 python env setting
+    alias python=python3
+    export PATH="/Library/Frameworks/Python.framework/Versions/3.9/bin"
+    # PATH - path지정을 안 해주면 .zshrc 자체를 들어갈 수 없다.
+    export PATH=%PATH:/bin:/usr/local/bin:/usr/bin
+-->
+
+## 기본 맥 환경변수 설정하기
+i — vim 편집기에서 i를 눌러 insert 모드로 진입
+export 환경변수명=환경변수값 — 환경변수 입력
+ESC 키 — ESC 키를 눌러 insert모드 종료
+:q    // 종료
+:w    // 저장
+:wq   // 저장 후 종료
+:q!   // 저장하지 않고 종료
+:wq!  // 강제로 저장 후 종료
+
+source ~/.zshrc — 환경변수 등록
+echo $환경변수명 — 환경변수 등록 확인
+
+
