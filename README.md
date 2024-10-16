@@ -53,10 +53,12 @@ echo $환경변수명 — 환경변수 등록 확인
 gyoungminlee@Gyoungminui-MacBookAir pythonWebscraper % python -m venv webScraper
 gyoungminlee@Gyoungminui-MacBookAir pythonWebscraper % source webScraper/bin/activate 
 deactivate
+가상환경 삭제 : sudo rm -rf 가상환경이름
 
 패키지 버전 관리 
 pip freeze > requirements.txt 명령으로 현재 환경의 패키지 목록을 저장
 pip install -r requirements.txt 다른 환경에서 명령으로 동일한 환경을 구축가능
+pip uninstall -r requirements.txt 전부 삭제
 
 모듈 설치 후 깃 push 오류를 위해 용량을 늘려줌
 git config --global http.postBuffer 524288000    
