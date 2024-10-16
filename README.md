@@ -49,4 +49,11 @@ ESC 키 — ESC 키를 눌러 insert모드 종료
 source ~/.zshrc — 환경변수 등록
 echo $환경변수명 — 환경변수 등록 확인
 
+# 웹스크래퍼는 순수 파이썬만 사용하므로 기본 제공되는 Venv 사용, 향후 다른 프로젝트에서는 아나콘다를 활용해 보자.
+gyoungminlee@Gyoungminui-MacBookAir pythonWebscraper % python -m venv webScraper
+gyoungminlee@Gyoungminui-MacBookAir pythonWebscraper % source webScraper/bin/activate 
+deactivate
 
+패키지 버전 관리 
+pip freeze > requirements.txt 명령으로 현재 환경의 패키지 목록을 저장
+pip install -r requirements.txt 다른 환경에서 명령으로 동일한 환경을 구축가능
