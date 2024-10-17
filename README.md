@@ -26,7 +26,7 @@ vim ~/.zshrc
     1. 환경변수 필요한 거 입력하기
     2. esc 누르고 :eq     
 source ~/.zshrc 
-    
+    /Library/Frameworks/Python.framework/Versions/3.9/Resources/Python.app
 <!-- 
     저장된 환경변수
     # 3.9.13 python env setting
@@ -62,3 +62,4 @@ pip uninstall -r requirements.txt 전부 삭제
 
 모듈 설치 후 깃 push 오류를 위해 용량을 늘려줌
 git config --global http.postBuffer 524288000    
+
