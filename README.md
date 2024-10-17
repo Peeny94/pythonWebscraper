@@ -60,6 +60,6 @@ pip freeze > requirements.txt 명령으로 현재 환경의 패키지 목록을 
 pip install -r requirements.txt 다른 환경에서 명령으로 동일한 환경을 구축가능
 pip uninstall -r requirements.txt 전부 삭제
 
-모듈 설치 후 깃 push 오류를 위해 용량을 늘려줌
+모듈 설치 후 깃 push 오류를 위해 용량을 늘려줌, .gitignore 파일도 만들어줌.(사이트 사용)
 git config --global http.postBuffer 524288000    
 
