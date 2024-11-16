@@ -87,4 +87,4 @@ class Pagination:
         # def 함수로 만들되, class로 변형도 시켜보자: 모든 일자리 정보를 class 에 넣고 method를 활용해서 job들을 배열안에 넣어보자.
         # OOP형태로의 변환도 시도해봐라.
         remote = Scrape(url)
-    p   print(all_jobs)
+        print(all_jobs)
