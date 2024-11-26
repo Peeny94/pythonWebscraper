@@ -26,4 +26,3 @@ def acess(r):
     print(r.content)
     print(acess(keywords))
   
-acess
