@@ -10,6 +10,7 @@ soup = BeautifulSoup(
     response.content,
     "html.parser",
 )
+
 all_jobs=[]
 jobs = soup.find("section",
         #파이썬 언어라 '_'를 붙여줘야 한다.
