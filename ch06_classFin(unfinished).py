@@ -20,16 +20,18 @@ class Scrape:
         all_jobs= []
 
         for job in jobs:
-            title = job.find("span",class_="title").text
-            companys = job.find_all("span", class_="company")   
+            title = job.find("h4",class_="new-listing__header__title").text
+            # 아직 수정필요함. error가 남.
+            companys = job.find_all("p", class_="new-listing__company-")
             if len(companys) == 3: 
-                company,position,region  = companys
-            elif len(companys) == 2:
-                company,position = companys
-                region= None
+                company,region,position  = companys.text
+            elif len(companys) == 0:
+                company =[]
+                error = "err"
             else :
                 continue
-            """         else:
+            """         
+            else:
                 for err in companys:
                     logging.warning(f"errURL: {url}")              
                 # for err_info in companys:
@@ -39,9 +41,10 @@ class Scrape:
             url = job.find("div", class_="tooltip--flag-logo").next_sibling["href"]
             job_data ={     
                 "title": title,
-                "company": company.text,
-                "position": position.text,
-                "region": region.text,
+                "company": company,
+                "error": error,
+                # "position": position.text,
+                # "region": region.text,
                 "url": f"https://weworkremotely.com{url}",
             }
             all_jobs.append(job_data)
@@ -74,7 +77,8 @@ for x in range(total_pages):
     # 리스트에 특성에 따라 페이지 1부터로 임의로 숫자를 변경함.
     url = f"https://weworkremotely.com/remote-full-time-jobs?page={x+1}"
     scraper = Scrape(url).scrape_page
-    all_jobs.append(scraper)
+    # 클래스형 메소드 실행시 괄호넣기. --기본 문법. 숙지.!
+    all_jobs.extend(scraper())
 
 print(f"Total jobs scraped: {len(all_jobs)}")
 
