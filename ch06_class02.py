@@ -17,14 +17,17 @@ jobs = soup.find("section",
         class_ ="jobs"
     ).find_all("li")[1:-1] #페이지 구성요소에 따라 다르게 설정해준다. 처음과 끝 li태그 정보를 제거.
 for job in jobs:
-    title = job.find("span",class_="title").text #'.text': 해당 요소의 실제 텍스트값만 추출
+    title = job.find("h4",class_="new-listing__header__title").text #'.text': 해당 요소의 실제 텍스트값만 추출
     #region = job.find("span", class_="region").text // 하기 추출값에 지역이 포함되기 때문에 중복값은 제거.
     #"company"가 포함된 모든 태그를 찾는다. 'find_all' 이용.
-    companys = job.find_all("span", class_="company")
-    if len(companys) >= 3: 
-            company,position,region  = companys
-    else:
-            company,position = companys
+    companys = job.find_all("p", class_="new-listing__company-")
+    if len(companys) == 3: 
+        company,region,position  = companys.text
+    elif len(companys) == 0:
+        company =[]
+        error = "err"
+    else :
+        continue
     #url 정보 중 특정 태그값의 정보의 다음 요소를 가져올때 'next_sibling["요소"]'를 쓴다.
     #"tooltip" 이라고 쓰면 안나오고 정확한 아이템값을 입력해야 한다. 주의!! company의 경우 find_all을 사용해서 모든 태그를 가져왔기 때문에 문제가 되지 않지만 find의 경우 아이템명이 정확해야만 한다.
     url = job.find("div", class_="tooltip--flag-logo").next_sibling["href"]
@@ -41,9 +44,10 @@ for job in jobs:
     #dicks 형태로 텍스트값만 키와 값으로 지정.
     job_data ={
         "title": title,
-        "company": company.text,
-        "position": position.text,
-        "region": region.text,
+        "company": company,
+        "error": error,
+        # "position": position.text,
+        # "region": region.text,
         "url": f"https://weworkremotely.com{url}",
     }
     all_jobs.append(job_data) 
