@@ -172,5 +172,7 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
-
 # End of https://www.toptal.com/developers/gitignore/api/python
+
+# 스크랩핑 구글시트 연동 보안 key, 절대 노출 되면 안됨.
+credentials.json 
