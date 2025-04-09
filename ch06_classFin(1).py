@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import logging # 웹페이지에서 지정된 값 이외에 변수를 처리하기 위한 목적
 import time  # 요청 간 딜레이 추가
 # 기존 코드 중 self 호출로 초기화 식을 좀 더 많이 씀. --> 코드 가독성 향상에 좋은듯. 
+# https://remoteok.com/remote-{x}-jobs RemotOk site scraping project.
 class Scrape:
 
     def __init__(self,url):
@@ -43,14 +44,14 @@ class Scrape:
                 "company": company.text,
                 "position": position.text,
                 "region": region.text,
-                "url": f"https://weworkremotely.com{url}",
+                "url": f"https://remoteok.com/remote-{url}-jobs",
             }
             #Scrape(url).scrape_page를 append() 하니까 함수 객체가 리스트에 추가됨.
             # 대신, scraper() 실행 결과를 리스트에 추가해야 함.
             all_jobs.extend(scraper())
             # 메소드를 돌리고 결과값 정의를 안함. 정말 바보같다. 
         return all_jobs
-class Pagination:
+class Category:
     # self 정의는 중요하다. 정적 메소드란 걸 표기, 클래스 내에서만 실행됨. ...자바이론?     ---나중에 한 번 더 check. 
     def __init__(self, url):
         self.url = url
@@ -62,49 +63,21 @@ class Pagination:
         response =requests.get(self.url, headers=self.headers)
         
         if response.status_code == 403:
-            print("❌ Access Denied (403). Trying again after a short delay...")
+            print("Access Denied (403). Trying again after a short delay...")
             time.sleep(5)  # 5초 대기 후 다시 시도
             response = requests.get(self.url, headers=self.headers)
         
-        if response.status_code != 200:
-            print(f"⚠️ Failed to access {self.url} - Status Code: {response.status_code}")
-            return 1  # 페이지 개수를 1로 가정 (예외 처리)
-
+        elif response.status_code != 200:
+            print(f"Failed to access {self.url} - Status Code: {response.status_code}")
+            return []  # 페이지 개수를 1로 가정 (예외 처리)
+        
         soup = BeautifulSoup(response.content, "html.parser")
-        buttons =  len(soup.find("div", class_="pagination").find_all("span", class_="page")) #page 양을 통해 반복문 횟수를 결정한다.
+        #키워드 목록으로  "remotelOk" 사이트에서 해당 키워드로 일자리 검색하기
+        keywords = ["flutter","python","golang"]
+        page= soup.find("div", class_="page").find("table").next_sibling["today"]
+        buttons =  len(keywords) #page 양을 통해 반복문 횟수를 결정한다.
         return buttons
 
-#상기의 클래스를 정의해서 페이징을 하고, 하기부턴 스크랩핑을 위해 클래스 함수를 호출하는 방식임.
-
-# AttributeError: 'str' object has no attribute 'url' --에러 
-#     get_pages()는 클래스 메서드(@classmethod)나 정적 메서드(@staticmethod)가 아님
-#     즉, 인스턴스를 먼저 생성해야 self.url을 사용할 수 있음 --> Pagination(url) 을 넣어주는 구조. 
-pagination = Pagination("https://weworkremotely.com/remote-full-time-jobs/")
-# pagination 클래스의 인스턴스 함수를 불러온다. 
-total_pages = pagination.get_pages()
-#scrap_page에서 따로 url 을 정의하지 않는 건 하기 반복문으로 전체 페이징 코드를 작성하기 때문.
-print(f"Total pages found: {total_pages}")
-
-all_jobs=[]
-for x in range(total_pages):
-    # 리스트에 특성에 따라 페이지 1부터로 임의로 숫자를 변경함.
-    url = f"https://weworkremotely.com/remote-full-time-jobs?page={x+1}"
-    #호출 방식에 ()와 클래스의 self 정의 같은 것들에 유의할것.
-    scraper = Scrape(url).scrape_page()
-    all_jobs.extend(scraper)
-
-print(f"Total jobs scraped: {len(all_jobs)}")
-
-
-#키워드 목록으로  "remotelOk" 사이트에서 해당 키워드로 일자리 검색하기
-
-keywords = [
-        "flutter",
-        "python",
-        "golang"
-    ]
-print(range(len(keywords))) #3
-# 반복 횟수가 아닌데 자꾸 반복 횟수함...그래서 안됐...
 for x in keywords:
         
     #로컬에서 웹서버에 접속시도시 
