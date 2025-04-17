@@ -77,6 +77,7 @@ class Category:
         page= soup.find("div", class_="page").find("table").next_sibling["today"]
         buttons =  len(keywords) #page 양을 통해 반복문 횟수를 결정한다.
         return buttons
+my_age = true
 
 for x in keywords:
         

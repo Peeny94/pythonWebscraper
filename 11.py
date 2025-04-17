@@ -1,4 +1,6 @@
-# Write your code here:
+# 👇🏻 YOUR CODE 👇🏻:
+
+
 def get_yearly_revenue(monthly_revenue):
   return monthly_revenue
   
@@ -15,8 +17,8 @@ def get_tax_amount(profit):
 def apply_tax_credits(tax_amount,tax_credits):
   return tax_amount*tax_credits
 
-# Don't touch anthing below this line 🙅🏻‍♂️🙅🏻‍♀️
-
+# /YOUR CODE
+# BLUEPRINT | DONT EDIT
 monthly_revenue = 5500000
 monthly_expenses = 2700000
 tax_credits = 0.01
@@ -33,3 +35,5 @@ final_tax_amount = tax_amount - apply_tax_credits(tax_amount,tax_credits)
 
 print(f"Your tax bill is: ${final_tax_amount}")
 
+
+# /BLUEPRINT
